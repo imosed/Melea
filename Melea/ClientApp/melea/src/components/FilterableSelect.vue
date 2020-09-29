@@ -1,37 +1,28 @@
-<template>
-  <div class="filterable-select-component">
-    <input
-      type="text"
-      v-model="inp"
-      :class="{'extended': extended}"
-      @focus="extended = true"
-      @keyup="filterOptions(inp)"
-      ref="filterBox"
-    />
-    <ul
-      class="fs-options" v-show="extended" :class="{'extended': extended}" ref="suggestions">
-      <template v-for="(opt, i) in opts" v-bind:key="i">
-        <li @click="handleClick(opt)">{{opt}}</li>
-      </template>
-    </ul>
-  </div>
+<template lang="pug">
+.filterable-select-component
+  input(type="text"
+    v-model="inp"
+    :class="{'extended': extended}"
+    @focus="extended = true"
+    @keyup="filterOptions(inp)"
+    ref="filterBox")
+  ul.fs-options(v-show="extended"
+    :class="{'extended': extended}"
+    ref="suggestions")
+    template(v-for="(opt, i) in opts" v-bind:key="i")
+      li(@click="handleClick(opt)") {{opt}}
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { Watch } from 'vue-property-decorator';
-
-@Options({
-  props: {
-    options: Array,
-  },
-})
+import { Vue } from 'vue-class-component';
+import { Prop, Watch } from 'vue-property-decorator';
 
 export default class FilterableSelect extends Vue {
   inp = '';
 
   extended = false;
 
+  @Prop()
   options!: Array<string>;
 
   opts: Array<string> = [];
@@ -67,6 +58,7 @@ export default class FilterableSelect extends Vue {
   handleClick(val: string) {
     this.inp = val;
     this.extended = false;
+    this.$emit('option-selected', val);
   }
 
   @Watch('options')
@@ -85,7 +77,7 @@ export default class FilterableSelect extends Vue {
   padding 0
   margin 0
   border 1px solid
-  border-color #777
+  border-color #8d8d8d
   overflow-y scroll
 
   &.extended
@@ -100,4 +92,7 @@ export default class FilterableSelect extends Vue {
 
 .extended
   border-color #777 #777 #c6c6c6 #777
+
+input
+  width 100%
 </style>

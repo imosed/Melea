@@ -1,37 +1,23 @@
-<template>
-  <div class="accordion-component">
-    <div class="accordion-control" @click="toggleAccordion">
-      {{title}}
-      <div class="accordion-arrow" :class="{'accordion-down': !extended}">
-      </div>
-    </div>
-    <div class="accordion-content" :class="{'active': extended, 'inactive': !extended}">
-      <div class="accordion-header">
-        <slot name="accordion-header">
-        </slot>
-      </div>
-      <div class="accordion-body">
-        <slot name="accordion-body">
-        </slot>
-      </div>
-      <div class="accordion-footer">
-        <slot name="accordion-footer">
-        </slot>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .accordion-component
+    .accordion-control(@click="toggleAccordion")
+      | {{title}}
+      .accordion-arrow(:class="{'accordion-down': !extended}")
+    .accordion-content(:class="{'active': extended, 'inactive': !extended}")
+      .accordion-header
+        slot(name="accordion-header")
+      .accordion-body
+        slot(name="accordion-body")
+      .accordion-footer
+        slot(name="accordion-footer")
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-
-@Options({
-  props: {
-    title: String,
-  },
-})
+import { Vue } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
 export default class Accordion extends Vue {
+  @Prop()
   title!: string;
 
   extended = false;

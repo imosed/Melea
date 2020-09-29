@@ -1,7 +1,6 @@
-<template>
-  <div class="home">
-    <BlendCard :name="blend.name" :volumes="blend.volumes" />
-  </div>
+<template lang="pug">
+.home
+  BlendCard(:name="blend.name" :volumes="blend.volumes")
 </template>
 
 <script lang="ts">

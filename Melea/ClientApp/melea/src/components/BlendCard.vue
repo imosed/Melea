@@ -1,19 +1,12 @@
-<template>
-  <div class="card-component">
-    <div class="card-header">
-      {{ name }}
-    </div>
-    <div class="card-body">
-      <ul>
-        <template v-for="(volume, i) in volumes" v-bind:key="i">
-          <li>{{ volume.drops }} drops of {{ volume.oil.name }}</li>
-        </template>
-      </ul>
-    </div>
-    <div class="card-footer">
-      <slot name="card-footer"></slot>
-    </div>
-  </div>
+<template lang="pug">
+.card-component
+  .card-header {{ name }}
+  .card-body
+    ul
+      template(v-for="(volume, i) in volumes" v-bind:key="i")
+        li {{ volume.drops }} drops of {{ volume.oil.name }}
+  .card-footer
+    slot(name="card-footer")
 </template>
 
 <script lang="ts">

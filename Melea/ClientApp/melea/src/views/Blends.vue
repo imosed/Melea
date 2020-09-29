@@ -1,9 +1,7 @@
-<template>
-<div class="blends">
-  <div v-for="(blend, i) in allBlends" v-bind:key="i">
-    <BlendCard :name="blend.name" :volumes="blend.volumes" />
-  </div>
-</div>
+<template lang="pug">
+.blends
+  div(v-for="(blend, i) in allBlends" v-bind:key="i")
+    BlendCard(:name="blend.name" :volumes="blend.volumes")
 </template>
 
 <script lang="ts">

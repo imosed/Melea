@@ -5,8 +5,9 @@
     </section>
     <section id="links">
       <ul>
-        <li><a href="/blends">Blends</a></li>
         <li><a href="/about">About</a></li>
+        <li><a href="/add">Add</a></li>
+        <li><a href="/blends">Blends</a></li>
       </ul>
     </section>
   </nav>
@@ -59,27 +60,52 @@ body
       &:hover
         background-color #09899c
 
-#content {
+#content
   margin 0 auto
   width 860px
-}
+
+span.heading
+  font-weight bold
+
+span.heading.h1
+  font-size 36px
+
+span.heading.h2
+  font-size 32px
+
+span.heading.h3
+  font-size 28px
+
+span.heading.h4
+  font-size 24px
+
+span.heading.h5
+  font-size 20px
+
+span.heading.h6
+  font-size 16px
 
 input
-  border-radius 0
   border 1px solid
   border-color #aaa
-  padding 0 8px
   border-radius 2px
+  font-size 16px
+  padding 2px 4px
 
 button.btn
   border 2px #fff solid
   border-radius 6px
-  background-color brown
   padding 6px 26px
   color #fff
   font-weight bold
   font-size 14px
   cursor pointer
+
+  &.color-confirm-primary
+    background-color #5FC1A7
+
+  &.color-confirm-secondary
+    background-color #7d7d7d
 
 .bg-err
   background-color #DA4B6F
