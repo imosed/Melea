@@ -3,15 +3,17 @@
   .add-blend-content
     .header
       span.heading.h3 Oil {{ currentStep }}
-    .input-controls
-      FilterableSelect.oil-select(:options="essentialOils"
-        :val="currentOil"
-        @option-selected="assignCurrentOil($event)")
-      input(type="number"
-        @change="assignCurrentDrops($event)"
-        v-model="currentDrops")
-    button.btn.color-confirm-primary Done
-    button.btn.color-confirm-secondary(@click="addNewOil") Add oil
+    .form-group
+      .input-controls
+        FilterableSelect.oil-select(:options="essentialOils"
+          :val="currentOil"
+          @option-selected="assignCurrentOil($event)")
+        input(type="number"
+          @change="assignCurrentDrops($event)"
+          v-model="currentDrops")
+      .button-group
+        button.btn.color-confirm-primary Done
+        button.btn.color-confirm-secondary(@click="addNewOil") Add oil
     div.progress-container
       ul.blend-progress
         li(v-for="i in numberOfOils" @click="jumpToStep(i)")
@@ -54,21 +56,30 @@ export default class AddBlend extends Vue {
       this.numberOfOils += 1;
       this.currentStep = this.numberOfOils;
       this.selections.push({ oilName: this.currentOil, drops: this.currentDrops });
+      const selectedNames = this.selections.map((s: BlendComponent) => s.oilName);
+      this.essentialOils = this.essentialOils.filter((o: string) => !selectedNames.includes(o));
       this.currentOil = '';
       this.currentDrops = 0;
+      this.stash = { oilName: '', drops: 0 };
     }
   }
 
   assignCurrentOil(e: string) {
-    this.currentOil = e;
-    this.stash.oilName = this.currentOil;
+    if (e !== '') {
+      this.currentOil = e;
+      if (this.currentStep === this.numberOfOils) {
+        this.stash.oilName = this.currentOil;
+      }
+    }
   }
 
   assignCurrentDrops(e: Event) {
     const v = Number((e.target as HTMLInputElement).value);
-    if (!Number.isNaN(v)) {
+    if (!Number.isNaN(v) && v > 0) {
       this.currentDrops = v;
-      this.stash.drops = this.currentDrops;
+      if (this.currentStep === this.numberOfOils) {
+        this.stash.drops = this.currentDrops;
+      }
     }
   }
 
@@ -91,6 +102,12 @@ export default class AddBlend extends Vue {
   flex-direction row
   justify-content center
 
+.add-blend-content
+  height 400px
+  display flex
+  flex-direction column
+  justify-content space-between
+
 .oil-select
   width 480px
 
@@ -101,6 +118,7 @@ export default class AddBlend extends Vue {
 .input-controls
   display flex
   justify-content space-between
+  margin-bottom 20px
 
 .progress-container
   display flex
