@@ -1,10 +1,10 @@
 <template lang="pug">
 .filterable-select-component
   input(type="text"
-    v-model="inp"
+    v-model="val"
     :class="{'extended': extended}"
     @focus="extended = true"
-    @keyup="filterOptions(inp)"
+    @keyup="filterOptions(val)"
     ref="filterBox")
   ul.fs-options(v-show="extended"
     :class="{'extended': extended}"
@@ -18,7 +18,8 @@ import { Vue } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
 export default class FilterableSelect extends Vue {
-  inp = '';
+  @Prop()
+  val = '';
 
   extended = false;
 
@@ -56,7 +57,6 @@ export default class FilterableSelect extends Vue {
   }
 
   handleClick(val: string) {
-    this.inp = val;
     this.extended = false;
     this.$emit('option-selected', val);
   }
@@ -81,7 +81,7 @@ export default class FilterableSelect extends Vue {
   overflow-y scroll
 
   &.extended
-    border-color #c6c6c6 #777 #777 #777
+    border-color #CDC6A5 #8D9F87 #8D9F87 #8D9F87
 
   li
     padding 8px
@@ -91,7 +91,7 @@ export default class FilterableSelect extends Vue {
       background-color #cfcfcf
 
 .extended
-  border-color #777 #777 #c6c6c6 #777
+  border-color #8D9F87 #8D9F87 #CDC6A5 #8D9F87
 
 input
   width 100%

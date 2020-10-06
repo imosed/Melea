@@ -28,7 +28,7 @@ body
   display flex
   flex-direction row
   justify-content space-between
-  background-color #24B0C6
+  background-color #6f9283
   margin-bottom 12px
   color #fff
 
@@ -58,7 +58,7 @@ body
       margin 0 4px
 
       &:hover
-        background-color #09899c
+        background-color #696d7d
 
 #content
   margin 0 auto
@@ -102,11 +102,11 @@ button.btn
   cursor pointer
 
   &.color-confirm-primary
-    background-color #5FC1A7
+    background-color #696d7d
 
   &.color-confirm-secondary
-    background-color #7d7d7d
+    background-color #cdc6a5
 
 .bg-err
-  background-color #DA4B6F
+  background-color #db162f
 </style>

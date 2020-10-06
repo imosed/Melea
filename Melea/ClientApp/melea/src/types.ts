@@ -16,3 +16,8 @@ export interface Volume {
   oil: EssentialOil;
   blendId: number;
 }
+
+export interface BlendComponent {
+  oilName: string;
+  drops: number;
+}

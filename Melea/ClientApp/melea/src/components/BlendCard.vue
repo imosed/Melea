@@ -28,8 +28,8 @@ export default class BlendCard extends Vue {
   display flex
   flex-direction column
   justify-content space-between
-  color #fff
-  background-color #EA8840
+  color #F0DCCA
+  background-color #6F9283
   min-height 320px
   padding 40px 48px
 

@@ -3,13 +3,18 @@
   .add-blend-content
     .header
       span.heading.h3 Oil {{ currentStep }}
-    FilterableSelect.oil-select(:options="essentialOils"
-      @option-selected="assignCurrentOil($event)")
+    .input-controls
+      FilterableSelect.oil-select(:options="essentialOils"
+        :val="currentOil"
+        @option-selected="assignCurrentOil($event)")
+      input(type="number"
+        @change="assignCurrentDrops($event)"
+        v-model="currentDrops")
     button.btn.color-confirm-primary Done
     button.btn.color-confirm-secondary(@click="addNewOil") Add oil
     div.progress-container
       ul.blend-progress
-        li(v-for="i in oilNum" @click="currentStep = i")
+        li(v-for="i in numberOfOils" @click="jumpToStep(i)")
           span.progress-dash(:class="{'active': i === currentStep}")
 </template>
 
@@ -17,7 +22,7 @@
 // This page will eventually be a wizard
 import { Options, Vue } from 'vue-class-component';
 import FilterableSelect from '@/components/FilterableSelect.vue';
-import { EssentialOil } from '@/types';
+import { BlendComponent, EssentialOil } from '@/types';
 import { getOils } from '@/lib/data';
 
 @Options({
@@ -25,13 +30,17 @@ import { getOils } from '@/lib/data';
 })
 
 export default class AddBlend extends Vue {
-  oilNum = 1;
+  numberOfOils = 1;
 
   currentStep = 1;
 
-  selections: Array<any> = [];
+  selections: Array<BlendComponent> = [];
 
   currentOil = '';
+
+  currentDrops = 0;
+
+  stash: BlendComponent = { oilName: '', drops: 0 };
 
   essentialOils: Array<string> = [];
 
@@ -42,15 +51,36 @@ export default class AddBlend extends Vue {
 
   addNewOil() {
     if (this.currentOil.trim() !== '') {
-      this.oilNum += 1;
-      this.currentStep = this.oilNum;
-      this.selections.push(this.currentOil);
+      this.numberOfOils += 1;
+      this.currentStep = this.numberOfOils;
+      this.selections.push({ oilName: this.currentOil, drops: this.currentDrops });
       this.currentOil = '';
+      this.currentDrops = 0;
     }
   }
 
   assignCurrentOil(e: string) {
     this.currentOil = e;
+    this.stash.oilName = this.currentOil;
+  }
+
+  assignCurrentDrops(e: Event) {
+    const v = Number((e.target as HTMLInputElement).value);
+    if (!Number.isNaN(v)) {
+      this.currentDrops = v;
+      this.stash.drops = this.currentDrops;
+    }
+  }
+
+  jumpToStep(num: number) {
+    this.currentStep = num;
+    if (num !== this.numberOfOils) {
+      this.currentOil = this.selections[num - 1].oilName;
+      this.currentDrops = this.selections[num - 1].drops;
+    } else {
+      this.currentOil = this.stash.oilName;
+      this.currentDrops = this.stash.drops;
+    }
   }
 }
 </script>
@@ -63,11 +93,14 @@ export default class AddBlend extends Vue {
 
 .oil-select
   width 480px
-  margin-bottom 12px
 
 .header
   text-align center
   margin 18px 0
+
+.input-controls
+  display flex
+  justify-content space-between
 
 .progress-container
   display flex
@@ -87,8 +120,8 @@ export default class AddBlend extends Vue {
       display inline-block
       height 4px
       width 24px
-      background-color #d8d8d8
+      background-color #CDC6A5
 
       &.active
-        background-color #5FC1A7
+        background-color #696D7D
 </style>

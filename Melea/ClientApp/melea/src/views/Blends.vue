@@ -18,7 +18,7 @@ export default class Blends extends Vue {
   allBlends: Array<Blend> = [];
 
   async created() {
-    this.allBlends = await getJson('/api/blends/all');
+    this.allBlends = await getJson('/api/blends/list');
   }
 }
 </script>

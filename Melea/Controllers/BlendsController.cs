@@ -29,7 +29,7 @@ namespace Melea.Controllers
             return _context.SaveChanges() > 0 || additions;
         }
 
-        [Route("all")]
+        [Route("list")]
         public ActionResult<IEnumerable<Blend>> AllBlends()
         {
             return _context.Blends

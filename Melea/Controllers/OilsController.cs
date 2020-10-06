@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Melea.Data;
 using Melea.Models;
@@ -16,9 +18,9 @@ namespace Melea.Controllers
         }
         
         [Route("list")]
-        public EssentialOil[] Index()
+        public ActionResult<IEnumerable<EssentialOil>> Index()
         {
-            return _context.Oils.ToArray();
+            return _context.Oils.ToList();
         }
     }
 }
